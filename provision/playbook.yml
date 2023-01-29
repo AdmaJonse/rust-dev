@@ -1,0 +1,25 @@
+---
+
+- hosts: all
+  connection: ssh
+  gather_facts: yes
+
+  tasks:
+
+    - name: Install prerequisites with apt
+      apt:
+        pkg:
+          - curl
+          - gcc
+          - make
+          - build-essential
+      become: yes
+  
+    - name: Download and install Rust
+      shell: curl https://sh.rustup.rs -sSf | sh -s -- -y
+
+    - name: Add Cargo's bin directory to the PATH
+      copy:
+        dest: /etc/profile.d/rust.sh
+        content: 'PATH=$HOME/.cargo/bin:$PATH'
+      become: yes
