@@ -4,8 +4,13 @@ BUILD_DIR := build
 
 .PHONY: build
 build:
-	rustc --out-dir $(BUILD_DIR) src/main.rs
+	cargo build --verbose
+
+.PHONY: run
+run: build
+	target/debug/hello-world
 
 .PHONY: clean
 clean:
-	rm -rf $(BUILD_DIR)
+	rm -rf target
+	rm -f Cargo.lock
